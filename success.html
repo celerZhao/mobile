@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="format-detection" content="telephone=no,email=no" />
+<meta name="ML-Config" content="fullscreen=yes,preventMove=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>MOBILE-成功页面</title>
+<link rel="stylesheet" href="css/global-mobile.css" />
+<link rel="stylesheet" href="css/layout-mobile.css" />
+<script>
+var cssEl = document.createElement('style');
+document.documentElement.firstElementChild.appendChild(cssEl);
+function setPxPerRem(){
+    var dpr = 1;
+    var pxPerRem = document.documentElement.clientWidth * dpr / 32;
+    if (pxPerRem < 10) pxPerRem = 10;
+    if (pxPerRem > 20) pxPerRem = 20;
+    cssEl.innerHTML = 'html{font-size:' + pxPerRem + 'px!important;}';
+}
+setPxPerRem();
+</script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <img src="img/mobile-topbar.jpg">
+    </div>
+    <div class="row reg-suc text-center">
+        <i class="icon-ok"></i>
+        <h3 class="title text-danger">恭喜注册成功</h3>
+        <div>恭喜您获得<span>xxx.xx</span>兑换券/优惠券</div>
+        <div class="pl-15 pr-15 pt-25 pb-25"><a class="btn btn-danger" href="javascript:void(0);">立即购买</a></div>
+        <div class="Qr-code"><img src="img/Qr-code.png">关注公众号</div>
+        <span>【光汇云油brightoilonline】</span>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="format-detection" content="telephone=no,email=no" />
+<meta name="ML-Config" content="fullscreen=yes,preventMove=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>MOBILE-首页</title>
+<link rel="stylesheet" href="css/global-mobile.css" />
+<link rel="stylesheet" href="css/layout-mobile.css" />
+<script>
+var cssEl = document.createElement('style');
+document.documentElement.firstElementChild.appendChild(cssEl);
+function setPxPerRem(){
+    var dpr = 1;
+    var pxPerRem = document.documentElement.clientWidth * dpr / 32;
+    if (pxPerRem < 10) pxPerRem = 10;
+    if (pxPerRem > 20) pxPerRem = 20;
+    cssEl.innerHTML = 'html{font-size:' + pxPerRem + 'px!important;}';
+}
+setPxPerRem();
+</script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <img src="img/mobile-topbar.jpg">
+        <img src="img/signin-banner1.jpg">
+    </div>
+    <form class="mb-10">
+        <ul class="list-unstyled list-p5">
+            <li>
+                <div class="form-group">
+                    <input id="userPhone" class="form-control" type="tel" maxlength="11" placeholder="请输入手机号码">
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <input id="passWordLoose" class="form-control" type="password" maxlength="16" placeholder="请设置密码">
+                </div>
+            </li>    
+            <li>
+                <div class="form-group">
+                    <span class="left">
+                        <input id="imgCode" class="form-control" type="text" maxlength="4" placeholder="图形验证码">
+                    </span>
+                    <span class="right">
+                        <img class="imgVcode" src="img/imgVcode.gif">
+                    </span>
+                </div>
+            </li>
+
+            <!-- 
+            <li>
+                <div class="form-group">
+                    <input id="rePassWordLoose" class="form-control" type="password" maxlength="16" placeholder="请重复密码">
+                </div>
+            </li>
+
+            <li>
+                <div class="form-group">
+                    <input id="bankCard" class="form-control" type="tel" maxlength="19" placeholder="请输入银行卡号">
+                </div>
+            </li>
+
+            <li>
+                <div class="form-group">
+                    <input id="userName" class="form-control" type="text" maxlength="30" placeholder="请输入用户名">
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <input id="realName" class="form-control" type="text" maxlength="20" placeholder="请输入真实姓名">
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <input id="dealPassword" class="form-control" type="tel" maxlength="6" placeholder="请输入交易密码">
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <input id="chinaId" class="form-control" type="tel" maxlength="18" placeholder="请输入身份证号码">
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <input id="chinese" class="form-control" type="tel" maxlength="18" placeholder="请输入中文文字">
+                </div>
+            </li> -->
+            <li>
+                <div class="form-group">
+                    <span class="left">
+                        <input id="phoneCode" class="form-control" type="tel" maxlength="6" placeholder="短信验证码">
+                    </span>
+                    <span class="right">
+                        <a id="phoneCodeBtn" class="btn btn-danger" href="javascript:void(0);">获取验证码</a>
+                    </span>
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <a id="submitBtn" class="btn btn-danger" href="javascript:void(0);">注册</a>
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <a id="alertMsg" class="btn btn-success" href="javascript:void(0);">调用提示半透明提示弹层</a>
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <a id="alertLoading" class="btn btn-success" href="javascript:void(0);">调用等候加载半透明弹层（不可关闭）</a>
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <a id="layerNoBtn" class="btn btn-primary" href="javascript:void(0);">通用弹层--不带按钮自适应高度提示框</a>
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <a id="layerNoBtnFull" class="btn btn-primary" href="javascript:void(0);">通用弹层--不带按钮固定高度提示框</a>
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <a id="layerOneBtn" class="btn btn-primary" href="javascript:void(0);">通用弹层--带确定按钮自适应高度提示框</a>
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <a id="layerOneBtnFull" class="btn btn-primary" href="javascript:void(0);">通用弹层--带确定按钮固定高度提示框</a>
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <a id="layerOneBtnRefresh" class="btn btn-primary" href="javascript:void(0);">通用弹层--带确定按钮自动刷新页面提示框</a>
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <a id="layerTwoBtn" class="btn btn-primary" href="javascript:void(0);">通用弹层--带取消和确定按钮自适应高度</a>
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <a id="layerTwoBtnFull" class="btn btn-primary" href="javascript:void(0);">通用弹层--带取消和确定按钮固定高度</a>
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <a id="layerTwoBtnShow" class="btn btn-success" href="javascript:void(0);">通用弹层--右上角不带“X”关闭按钮</a>
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <a id="layerBtnInput1" class="btn btn-success" href="javascript:void(0);">通用弹层--带表单return function</a>
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <a id="layerBtnInput2" class="btn btn-success" href="javascript:void(0);">通用弹层--带表单return obj</a>
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <a id="nativeShareBtn" class="btn btn-purple" href="javascript:void(0);">分享组件</a>
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <a id="testBtn" class="btn btn-primary" href="javascript:void(0);">TEST BUTTON</a>
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <a id="listLoadingBtn" class="btn btn-warning" href="javascript:void(0);">前往列表页--加载更多</a>
+                </div>
+            </li>
+        </ul>
+    </form>
+	
+	<!--滚动消息-->
+    <div id="scrollMsg" class="scroll-message bg-info pt-10 pr-10 pb-10 pl-10">
+        <h3 class="title">滚动列表标题</h3>
+        <ul class="list-unstyled cont">
+            <li><span>xiaoyanzi</span><span>1234****567</span><span>ccc</span></li>
+            <li><span>ofo</span><span>1234****678</span><span>ccc</span></li>
+            <li><span>mobike</span><span>1234****789</span><span>ccc</span></li>
+            <li><span>xiaoming</span><span>1234****579</span><span>ccc</span></li>
+            <li><span>xiaolan</span><span>1234****6868</span><span>ccc</span></li>
+            <li><span>xxx</span><span>1234****876</span><span>ccc</span></li>
+        </ul>
+    </div>
+</div>
+
+<!-- 底部固定按钮 -->
+<a id="fixedBtn" class="btn btn-danger btn-fixed" href="javascript:;">底部固定按钮</a>
+<i id="iconArrow" class="icon-angledoubledown iconArrow down"></i>
+<script src="js/lib/jquery-1.11.3.min.js"></script>
+<script src="js/bOilPlugIn/bOilPlugIn.js"></script>
+<script src="js/nativeShare/nativeShare.js"></script>
+<script>
+var bOilApp = new bOilPlugIn(), App = {
+    //是否后端开发状态(0前端，1后端)
+    status: 0,
+
+    init: function () {        
+        /*test********************************************/
+        $('#testBtn').on('click', function () {
+            //alert();
+            //bOilApp.refresh();
+        });
+
+        //点击验证码时校验
+        $('#phoneCodeBtn').on('click', function () {
+            var _this = this, thisId = $(_this).attr('id'), res = bOilApp.getPhoneCord(_this, 'userPhone', 'passWordLoose', 'imgCode');
+            if (App.status) {//后端开发
+                if (res) {
+                    //前端校验通过,后端请求
+                    $.ajax({
+                        url: '',
+                        dataType: '',
+                        data: {},
+                        type: 'post',
+                        success: function () {
+                            //to do something...
+
+                            //执行倒计时
+                            bOilApp.codeTime(thisId, res, 120);
+                        },
+                        error: function () {
+
+                        }
+                    });
+                }
+            } else {//前端开发
+                if (res) {
+                    //执行倒计时
+                    bOilApp.codeTime(thisId, res, 120);
+                }
+            }
+        });
+
+        //点击提交按钮时校验
+        $('#submitBtn').on('click', function () {
+            var _this = this, res = bOilApp.submintForm(_this, '#userPhone', '#passWordLoose', '#imgCode', '#phoneCode');
+
+            if (App.status) {
+                if (res) {
+                    //前端校验通过,后端请求
+                    $.ajax({
+                        url: '',
+                        dataType: '',
+                        data: {},
+                        type: 'post',
+                        success: function () {
+                            window.location.href = 'http://www.baidu.com/'
+                            //等候加载提示
+                            bOilApp.alertMsg(bOilApp.loadingText, _this, 'loading');
+                        },
+                        error: function () {
+                            
+                        }
+                    });  
+                }
+            } else {
+                if (res) {
+                    window.location.href = 'http://www.baidu.com/';
+                    //跳转页面前的等候加载提示
+                    bOilApp.alertMsg(bOilApp.loadingText, _this, 'loading');
+                }
+            }
+        });
+
+        //半透明提示弹层
+        $('#alertMsg').on('click', function () {
+            var thisElement = $(this);
+            bOilApp.alertMsg('hello world~', thisElement);
+        });
+
+        //等候加载
+        $('#alertLoading').on('click', function () {
+            bOilApp.alertMsg(bOilApp.loadingText, null, 'loading', 'noClear');
+        });
+
+        //通用弹层--不带按钮自适应高度提示框
+        $('#layerNoBtn').on('click', function () {
+            bOilApp.tips({
+                title: '提示',
+                closeId: 'tipsCloseBtn',
+                content: '<div class="text-center">欢迎调用通用弹层组件。</div>',
+                alone: true
+            });
+        });
+
+        //通用弹层--不带按钮固定高度提示框
+        $('#layerNoBtnFull').on('click', function () {
+            bOilApp.tips({
+                title: '提示',
+                closeId: 'tipsCloseBtn',
+                content: '<div class="text-center">欢迎调用通用弹层组件。</div>',
+                fixedHeight: true
+            });
+        });
+
+        //通用弹层--带确定按钮自适应高度提示框
+        $('#layerOneBtn').on('click', function () {
+            bOilApp.tips({
+                title: '提示',
+                closeId: 'tipsCloseBtn',
+                btnNums: 1,
+                content: '恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!恭喜您成功调用碳层组件,再见!',
+                btn: {
+                    btnSure: {
+                        text: '确 定',
+                        href: 'javascript:void(0);'
+                    }
+                },
+                alone: true
+            });
+        });
+
+        //通用弹层--带确定按钮自适应高度提示框
+        $('#layerOneBtnFull').on('click', function () {
+            bOilApp.tips({
+                title: '提示',
+                closeId: 'tipsCloseBtn',
+                btnNums: 1,
+                content: '恭喜您成功调用碳层组件,再见!',
+                btn: {
+                    btnSure: {
+                        text: '确 定',
+                        href: 'javascript:void(0);'
+                    }
+                },
+                fixedHeight: true,
+                alone: true
+            });
+        });
+
+        //通用弹层--带确定按钮自动刷新页面提示框
+        $('#layerOneBtnRefresh').on('click', function () {
+            bOilApp.tips({
+                title: '提示',
+                closeId: 'tipsCloseBtn',
+                btnNums: 1,
+                content: '恭喜您成功调用碳层组件,再见!',
+                btn: {
+                    btnSure: {
+                        text: '确 定',
+                        href: 'javascript:void(0);',
+                        refresh: true
+                    }
+                },
+                alone: true
+            });
+        });
+
+        //通用弹层--带取消和确定按钮自适应高度
+        $('#layerTwoBtn').on('click', function () {
+            bOilApp.tips({
+                title: '提示',
+                closeId: 'tipsCloseBtn',
+                btnNums: 2,
+                content: '恭喜您成功调用碳层组件!\\这里是一个多行列表的弹层\\用"双反斜杠"可以实现分行，不信你可以试试。',
+                btn: {
+                    btnSure: {
+                        text: '前往列表页',
+                        href: 'javascript:void(0);',
+                        fun: function () {
+                            //真正使用时请去掉setTimeout方法
+                            setTimeout(function () {
+                                window.location.href = 'listloading.html';
+                            }, 1000);
+                        }
+                    },
+                    btnCancle: {
+                        text: '取 消',
+                        href: 'javascript:void(0);',
+                        fun: function () {
+                            console.log('xiaoyu222222~~~~~~');
+                        }
+                    }
+                }
+            });
+        });
+        
+        //通用弹层--带取消和确定按钮固定高度
+        $('#layerTwoBtnFull').on('click', function () {
+            bOilApp.tips({
+                title: '提示',
+                closeId: 'tipsCloseBtn',
+                btnNums: 2,
+                content: '恭喜您成功调用碳层组件!\\这里是一个多行列表的弹层\\用"双反斜杠"可以实现分行，不信你可以试试。',
+                btn: {
+                    btnSure: {
+                        text: '前往列表页',
+                        href: 'javascript:void(0);',
+                        fun: function () {
+                            //真正使用时请去掉setTimeout方法
+                            setTimeout(function () {
+                                window.location.href = 'listloading.html';
+                            }, 1000);
+                        }
+                    },
+                    btnCancle: {
+                        text: '取 消',
+                        href: 'javascript:void(0);',
+                        fun: function () {
+                            console.log('xiaoyu222222~~~~~~');
+                        }
+                    }
+                },
+                fixedHeight: true
+            });
+        });
+
+        //通用弹层--带取消和确定按不隐藏
+        $('#layerTwoBtnShow').on('click', function () {
+            bOilApp.tips({
+                title: '提示',
+                closeId: '',
+                btnNums: 2,
+                content: '恭喜您成功调用碳层组件!\\这里是一个多行列表的弹层\\用"双反斜杠"可以实现分行，不信你可以试试。',
+                btn: {
+                    btnSure: {
+                        text: '前往列表页',
+                        href: 'javascript:void(0);',
+                        fun: function () {
+                            var thisElement = $(this);
+                            window.location.href = 'index.html';
+                            //bOilApp.alertMsg('hello world~', thisElement);
+                        },
+                        display: true
+                    },
+                    btnCancle: {
+                        text: '取 消',
+                        href: 'javascript:void(0);',
+                        fun: function () {
+                            console.log('xiaoyu222222~~~~~~');
+                        }
+                    }
+                }
+            });
+        });
+
+        //通用弹层--带表单和按钮的提示框-return funciton
+        $('#layerBtnInput1').on('click', function () {
+            var inputHtml = '<form><ul class="list-unstyled list-p5">'
+                          + '<li><div class="form-group"><input id="bankCard" class="form-control numSept" type="tel" maxlength="23" placeholder="请输入银行卡号"></div></li>' 
+                          + '<li><div class="form-group"><input id="dealPassword" class="form-control" type="tel" maxlength="6" placeholder="请输入交易密码"></div></li>'
+                          + '</ul></form>';
+            bOilApp.tips({
+                title: '提示框表单',
+                closeId: 'tipsCloseBtn',
+                btnNums: 2,
+                content: inputHtml,
+                btn: {
+                    btnSure: {
+                        text: '确　定',
+                        href: 'javascript:void(0);',
+                        fun: function () {
+                            //分割长号码4位数空格
+                            bOilApp.NumberSeparation('numSept');
+                            //清除输入框文本控件
+                            bOilApp.clearInput();
+                            
+                            return function (thisElement) {
+                                var _this = thisElement, res = bOilApp.submintForm(_this, '#bankCard', '#dealPassword');
+                                
+                                if (App.status) {
+                                    if (res) {
+                                        //前端校验通过,后端请求
+                                        $.ajax({
+                                            url: '',
+                                            dataType: '',
+                                            data: {},
+                                            type: 'post',
+                                            success: function () {
+                                                window.location.href = 'http://www.baidu.com/'
+                                                //等候加载提示
+                                                bOilApp.alertMsg(bOilApp.loadingText, _this, 'loading');
+                                            },
+                                            error: function () {
+                                                
+                                            }
+                                        });  
+                                    }
+                                } else {
+                                    if (res) {
+                                        window.location.href = 'http://www.baidu.com/';
+                                        //跳转页面前的等候加载提示
+                                        bOilApp.alertMsg(bOilApp.loadingText, _this, 'loading');
+                                    }
+                                }
+                            };
+                        },
+                        display: true
+                    },
+                    btnCancle: {
+                        text: '取　消',
+                        href: 'javascript:void(0);',
+                        fun: function () {
+                            console.log('xiaoyu222222~~~~~~');
+                        }
+                    }
+                }
+            });
+        });
+
+        //通用弹层--带表单和按钮的提示框-return obj
+        $('#layerBtnInput2').on('click', function () {
+            var inputHtml = '<form><ul class="list-unstyled list-p5">'
+                          + '<li><div class="form-group"><input id="userPhone" class="form-control" type="tel" maxlength="11" placeholder="请输入您的手机号码"></div></li>' 
+                          + '<li><div class="form-group"><span class="left"><input id="phoneCode" class="form-control" type="tel" maxlength="6" placeholder="短信验证码"></span><span class="right"><a id="btnPhoneCode" class="btn btn-danger" href="javascript:void(0);">获取验证码</a></span></div></li>'
+                          + '</ul></form>';
+            bOilApp.tips({
+                title: '提示框表单',
+                closeId: 'tipsCloseBtn',
+                btnNums: 1,
+                fnCbs: 2,
+                content: inputHtml,
+                btn: {
+                    btnSure: {
+                        text: '确　定',
+                        href: 'javascript:void(0);',
+                        fun: function () {
+                            //清除输入框文本控件
+                            bOilApp.clearInput();
+
+                            return {
+                                btnPhoneCode: function (thisElement) {
+                                    var _this = thisElement, thisId = $(_this).attr('id'), res = bOilApp.getPhoneCord(_this, 'userPhone');
+                                    if (App.status) {//后端开发
+                                        if (res) {
+                                            //前端校验通过,后端请求
+                                            $.ajax({
+                                                url: '',
+                                                dataType: '',
+                                                data: {},
+                                                type: 'post',
+                                                success: function () {
+                                                    //to do something...
+
+                                                    //执行倒计时
+                                                    bOilApp.codeTime(thisId, res, 120);
+                                                },
+                                                error: function () {
+
+                                                }
+                                            });
+                                        }
+                                    } else {//前端开发
+                                        if (res) {
+                                            //执行倒计时
+                                            bOilApp.codeTime(thisId, res, 120);
+                                        }
+                                    }
+                                },
+                                btnSure: function (thisElement) {
+                                    var _this = thisElement, res = bOilApp.submintForm(_this, '#userPhone', '#phoneCode');
+                                    
+                                    if (App.status) {
+                                        if (res) {
+                                            //前端校验通过,后端请求
+                                            $.ajax({
+                                                url: '',
+                                                dataType: '',
+                                                data: {},
+                                                type: 'post',
+                                                success: function () {
+                                                    window.location.href = 'http://www.baidu.com/'
+                                                    //等候加载提示
+                                                    bOilApp.alertMsg(bOilApp.loadingText, _this, 'loading');
+                                                },
+                                                error: function () {
+                                                    
+                                                }
+                                            });  
+                                        }
+                                    } else {
+                                        if (res) {
+                                            window.location.href = 'http://www.baidu.com/';
+                                            //跳转页面前的等候加载提示
+                                            bOilApp.alertMsg(bOilApp.loadingText, _this, 'loading');
+                                        }
+                                    }
+                                }
+                            };
+                        },
+                        display: true
+                    }
+                }
+            });
+        });
+
+        /*
+        @ 分享组件nativeShare
+        @ 调用实例方法 nativeShare(shareBtnId, pcode, config)
+        @ shareBtnId = '分享按钮Id（带#）'
+        @ pcode = 'pcode活动码'
+        @ config = '包含分享内容配置的对象'
+        */
+        $('#nativeShareBtn').on('click', function () {
+            var nShare = new nativeShare('#nativeShareBtn', '0000', {
+                url:'http://www.baidu.com',
+                title:'这里是分享内容的标题',
+                desc:'这里是分享的内容描述',
+                img:'http://test.bwoonline.com/guocj/tmp/mobile/img/Qr-code.png',
+                img_title:'3333333333333',
+                from:'44444444444444444444'
+            });
+        });
+
+        $('#listLoadingBtn').on('click', function () {
+            bOilApp.alertMsg(bOilApp.loadingText, null, 'loading', 'noClear');
+            //真正使用时请去掉setTimeout方法
+            setTimeout(function () {
+                window.location.href = 'listloading.html';
+            }, 1000);
+        });
+
+        //滚动信息列表
+        bOilApp.scrollMsg('#scrollMsg', 2500, 5);
+
+        //页面底部固定按钮
+        bOilApp.fixedBtn('#fixedBtn');
+
+        //页面底部的跳动提示箭头
+        bOilApp.footerArrow('#iconArrow');        
+
+        //密码与明文显示切换
+        bOilApp.pwdShowHide('#passWordLoose');
+
+        //文本输入框添加一键删除功能
+        bOilApp.clearInput();
+
+        //苹果设备显示“活动与苹果公司无关的声明”
+        bOilApp.activityStatement('本活动由光汇云油提供，与设备生产商Apple Inc.公司无关');
+    }
+};
+$(function(){
+    App.init();
+});
+</script>
+</body>
+</html>

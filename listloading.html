@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="format-detection" content="telephone=no,email=no" />
+<meta name="ML-Config" content="fullscreen=yes,preventMove=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>MOBILE-加载列表页</title>
+<link rel="stylesheet" href="css/global-mobile.css" />
+<link rel="stylesheet" href="js/listLoading/listLoading.css" />
+<script>
+var cssEl = document.createElement('style');
+document.documentElement.firstElementChild.appendChild(cssEl);
+function setPxPerRem() {
+    var dpr = 1;
+    var pxPerRem = document.documentElement.clientWidth * dpr / 32;
+    if (pxPerRem < 10) pxPerRem = 10;
+    if (pxPerRem > 20) pxPerRem = 20;
+    cssEl.innerHTML = 'html{font-size:' + pxPerRem + 'px!important;}';
+}
+setPxPerRem();
+</script>
+</head>
+<body>
+<div class="container">
+    <!--  -->
+    <div id="listLoading" class="row" data-class="listLoading">
+        <div>
+            <ul id="orderList" class="list-unstyled order-list">
+                <!-- <li>
+                    <span class="icon"><i class="icon-icon47"></i></span>
+                    <p class="title"><span class="time">10:34:20</span>listloading0</p>
+                    <p class="text">移动端上拉加载更多-下拉刷新组件...</p>
+                </li> -->
+            </ul>
+        </div>
+    </div>
+    <!--  -->
+</div>
+
+<script src="js/lib/jquery-1.11.3.min.js"></script>
+<script src="js/iscroll/iscroll.js"></script>
+<script src="js/listLoading/listLoading.js"></script>
+<script>
+$(function () {
+    var m = 3, n = 0, h = $(window).height(), 
+        //iocn图标
+        arr = ['jinrongye', 'shoucang', 'hongbao', 'hua', 'jinrongicon', 'dashuju', 'shuju5', 'xianhualipin', 'hua1', 'huakong', 'shuju1', 'icon47'];
+
+    // 创建iscroll之前必须要先设置父元素的高度，否则无法拖动iscroll
+    $('#listLoading').height(h);
+
+    // 模板
+    var createHtml = function(){
+        var __html = '', now, x, H, M, S;
+        for(var i = 0; i < 15; i++){
+            now = new Date().getTime();
+            now = new Date(now + i*1000);
+            x = Math.random().toString().substring(2,3);
+            H = now.getHours() + '';
+            H = H.length == 1 ? '0' + H : H;
+            M = now.getMinutes() + '';
+            M = M.length == 1 ? '0' + M : M;
+            S = now.getSeconds() + '';
+            S = S.length == 1 ? '0' + S : S;
+            __html += '<li><span class="icon"><i class="icon-' + arr[x] + '"></i></span>' + 
+            '<p class="title"><span class="time">' + H + ':' + M + ':' + S + '</span>listLoading' + (n++) + '</p>' + 
+            '<p class="text">移动端上拉下拉刷新组件...</p></li>';
+        }
+        return __html;
+    }
+
+    // demo
+    var listLoading = new Listloading('#listLoading', {
+        disableTime: true,  // 是否需要显示时间
+        pullUpAction : function(cb){   // 上拉加载更多
+            m--;
+            var flg = false;
+            var __html = createHtml();
+            if(m < 1){
+                flg = true;
+            }else{
+                $('#orderList').append(__html);
+            }
+            // 数据加载完毕需要返回 end为true则为全部数据加载完毕
+            cb(flg);
+        },
+        pullDownAction : function(cb, flg){  // 下拉刷新
+            // true则为默认加载 false为下拉刷新
+            if (flg) {
+                console.log('默认加载');
+            }
+            m = 10;
+            var __html = createHtml();
+            $('#orderList').html(__html);
+            // 执行完执行方法之后必须执行回调 回调的作用是通知默认加载已经全部执行完毕，程序需要去创建iscroll或者做下拉刷新动作
+            cb();
+        },
+        Realtimetxt: '官人不要，请放开我！',
+        loaderendtxt: '我是有底线的',
+        // iscroll的API 
+        iscrollOptions: {
+            // scrollbars: true   // 显示iscroll滚动条
+        }
+    });
+
+    // 点击事件
+    listLoading.evt('li', 'click', function (dom) {
+        //dom.remove();
+        //listLoading.refresh();
+
+        //页面跳转
+        var i = dom.index(), l = (i + '').length;
+        if (l == 1) {
+            pcode = '000' + i;
+        } else if (l == 2) {
+            pcode = '00' + i;
+        } else if (l == 3) {
+            pcode = '0' + i;
+        } else {
+            pcode = i;
+        }
+        window.location.href = 'https://c2b.brightoilonline.com/index.php/wap/experience.html?pcode=' + pcode;
+    });
+});
+    
+</script>
+</body>
+</html>

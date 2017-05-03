@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="format-detection" content="telephone=no,email=no" />
+<meta name="ML-Config" content="fullscreen=yes,preventMove=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>MOBILE-滑动页面</title>
+<link rel="stylesheet" href="css/global-mobile.css" />
+<link rel="stylesheet" href="css/layout-mobile.css" />
+<script>
+var cssEl = document.createElement('style');
+document.documentElement.firstElementChild.appendChild(cssEl);
+function setPxPerRem() {
+    var dpr = 1;
+    var pxPerRem = document.documentElement.clientWidth * dpr / 32;
+    if (pxPerRem < 10) pxPerRem = 10;
+    if (pxPerRem > 20) pxPerRem = 20;
+    cssEl.innerHTML = 'html{font-size:' + pxPerRem + 'px!important;}html, body, .container{height:100%;overflow:hidden;}';
+}
+setPxPerRem();
+</script>
+</head>
+<body>
+<div id="scrollPage" class="container">
+    <div id="audioSwitch" class="audio-switch rotating">
+        <audio id="controlAudio" autoplay="autoplay" loop="loop" preload="auto">
+            <source src="img/scrollPage/music.mp3" type="audio/mpeg" />
+        </audio>
+    </div>
+    <i id="iconArrow" class="icon-angledoubledown iconArrow down"></i>
+    <div id="mainPage" class="row">
+        <div class="page bg-success"></div>
+        <div class="page bg-warning"></div>
+        <div class="page bg-info"></div>
+        <div class="page bg-danger"></div>
+        <div class="page bg-primary"></div>
+        <div class="page bg-purple"></div>
+    </div>
+</div>
+<script src="js/lib/jquery-1.11.3.min.js"></script>
+<script>
+var App = {
+    status: false,
+    init: function () {
+        var h = $('body').height(), 
+            H = 0, 
+            scrollPage = $('#scrollPage'),
+            page = $('#mainPage > .page'), 
+            pageList = page.length, 
+            list = pageList;
+
+        page.css('height', h);
+
+        $('body').on('touchstart', '#scrollPage', function(e) {
+            var mainPage = $('#mainPage'), 
+                touch = e.originalEvent,
+                startY = e.originalEvent.changedTouches[0].pageY;
+
+            scrollPage.on('touchmove', function(e) {
+                e.preventDefault();
+                touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+                
+                /*
+                @ 上滑
+                */
+                if(touch.pageY - startY > 30) {
+                    if (!App.status && list < pageList) {
+                        if (scrollPage.hasClass('active')) {
+                            if (list == -1) {
+                                scrollPage.removeClass('active');
+                            }
+                            if ($('#iconArrow').hasClass('hide')) {
+                                $('#iconArrow').removeClass('hide');
+                            }
+                            list += 1;
+                            H += h;
+                            mainPage.css({
+                                '-webkit-transform': 'translateY('+ H +'px)',
+                                'transform': 'translateY('+ H +'px)',
+                                '-webkit-transition': '1.2s',
+                                'transition': '1.2s'
+                            });
+                        }
+                    }
+
+                    if (list == pageList) {
+                        scrollPage.removeClass('active');
+                    }
+                    App.status = true;
+                }
+
+                /*
+                @ 下滑
+                */
+                else if(touch.pageY - startY < -30) {
+                    if (!App.status && list > 1) {
+                        list -=1;
+                        H -= h;
+                        if (!scrollPage.hasClass('active')) {
+                            scrollPage.addClass('active');
+                        }
+                        mainPage.css({
+                            '-webkit-transform': 'translateY('+ H +'px)',
+                            'transform': 'translateY('+ H +'px)',
+                            '-webkit-transition': '1.2s',
+                            'transition': '1.2s'
+                        });
+                    }
+                    if (list == 1) {
+                        setTimeout(function () {
+                            $('#iconArrow').addClass('hide');
+                        }, 1200);
+                    }
+                    App.status = true;
+                };
+            });
+        }).on('touchend', function() {
+            scrollPage.off('touchmove');
+            App.status = false;
+        });
+
+        /*
+        音乐开关
+        */
+        $('#audioSwitch').on('click', function(){
+            var _this = $(this);
+            var controlAudio = document.getElementById('controlAudio');
+
+            if (_this.hasClass('rotating')) {
+                _this.removeClass('rotating');
+                controlAudio.pause();
+            }else{
+                _this.addClass('rotating');
+                controlAudio.play();
+            }      
+        });
+        //兼容IOS微信无法自动播放音乐
+        if (App.isIOS()) {
+            audioAutoPlay('controlAudio');
+            function audioAutoPlay(id){  
+                var audio = document.getElementById(id);  
+                audio.play();  
+                document.addEventListener("WeixinJSBridgeReady", function () {  
+                    audio.play();  
+                }, false);  
+                document.addEventListener('YixinJSBridgeReady', function() {  
+                    audio.play();  
+                }, false);  
+            }
+        }
+        //兼容UC等浏览器禁用自动播放音乐
+        $('body').on('touchstart', function () {
+            var controlAudio = document.getElementById('controlAudio');
+            if (!controlAudio.play()) {
+                controlAudio.play();
+            }
+        });
+    },
+    isIOS: function () {
+        var UA = navigator.userAgent, app = navigator.appVersion;
+        return ios = !!UA.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+    }
+};
+$(function () {
+    App.init(); 
+});
+</script>
+</body>
+</html>

@@ -30,6 +30,9 @@ setPxPerRem();
     <div class="row">
         <img src="img/mobile-topbar.jpg">
         <img src="img/signin-banner1.jpg">
+        <img src="img/signin-banner1.jpg">
+        <img src="img/signin-banner1.jpg">
+        <img src="img/signin-banner1.jpg">
     </div>
     <form class="mb-10">
         <ul class="list-unstyled list-p5">
@@ -220,6 +223,34 @@ var bOilApp = new bOilPlugIn(), App = {
     status: 0,
 
     init: function () {        
+	
+	 var winHeight = $(window).height(); //获取当前页面高度
+		$(window).resize(function() {
+			var thisHeight = $(this).height();
+			
+	/*		if (winHeight - thisHeight > 50) {
+				//当软键盘弹出，在这里面操作
+				//alert('aaa');
+				$('body').css('height', winHeight + 'px');
+				console.log("收起scrollY"+window.scrollY)
+				$(window).scrollTop(window.scrollY + 200);
+				console.log("1收起scrollY"+window.scrollY)
+			} else {
+				//alert('bbb');
+				//当软键盘收起，在此处操作
+				$('body').css('height', '100%');
+				console.log("展开scrollY"+window.scrollY)
+				$(window).scrollTop(window.scrollY - 200);
+				console.log("1	展开scrollY"+window.scrollY)
+			}
+			*/
+			if(document.hasFocus()){
+				document.activeElement.scrollIntoView(true);
+			}
+			
+			
+		});
+
         /*test********************************************/
         $('#testBtn').on('click', function () {
             //alert();
@@ -641,7 +672,7 @@ var bOilApp = new bOilPlugIn(), App = {
         bOilApp.scrollMsg('#scrollMsg', 2500, 5);
 
         //页面底部固定按钮
-        bOilApp.fixedBtn('#fixedBtn');
+        // bOilApp.fixedBtn('#fixedBtn');
 
         //页面底部的跳动提示箭头
         bOilApp.footerArrow('#iconArrow');        
